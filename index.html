@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biometric Exam Attendance | Topline College</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.css" rel="stylesheet">
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Face API -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
+
+  <!-- App Script -->
+  <script defer src="app.js"></script>
+</head>
+
+<body>
+
+  <!-- Floating Sidebar -->
+  <div id="sidebar">
+    <div class="logo">
+      <i class="lucide-camera"></i>
+      <span>Topline</span>
+    </div>
+
+    <div class="nav-item active" data-view="home">
+      <i class="lucide-log-in"></i> Check-In
+    </div>
+    <div class="nav-item" data-view="register">
+      <i class="lucide-user-plus"></i> Register
+    </div>
+    <div class="nav-item" data-view="attendance">
+      <i class="lucide-list-checks"></i> Attendance
+    </div>
+    <div class="nav-item" data-view="students">
+      <i class="lucide-users"></i> Students
+    </div>
+  </div>
+
+  <!-- Main Page -->
+  <div id="main">
+
+    <!-- Header -->
+    <header>
+      <div>
+        <h1>Biometric Exam Attendance System</h1>
+        <p>Topline College | <span id="todayDate"></span></p>
+      </div>
+
+      <div class="status">
+        <span id="model-status">Loading Models...</span>
+      </div>
+    </header>
+
+    <!-- PAGE: CHECK-IN -->
+    <section id="home" class="page active">
+
+      <h2>Exam Check-In</h2>
+
+      <div class="camera-box">
+        <video id="video" autoplay muted playsinline></video>
+        <canvas id="overlay"></canvas>
+
+        <button id="stopCamera" class="stop-btn hidden">Stop Camera</button>
+      </div>
+
+      <button id="startVerify" class="primary-btn disabled">Verify Identity</button>
+
+      <div id="verifyResult"></div>
+    </section>
+
+    <!-- PAGE: REGISTER -->
+    <section id="register" class="page">
+
+      <h2>Register Student</h2>
+
+      <div class="form">
+        <label>Student ID</label>
+        <input id="reg_id" type="text" placeholder="e.g DIT-01-0012">
+
+        <label>Full Name</label>
+        <input id="reg_name" type="text">
+
+        <label>Course</label>
+        <input id="reg_course" type="text">
+      </div>
+
+      <div class="camera-box">
+        <video id="videoReg" autoplay muted playsinline></video>
+        <canvas id="overlayReg"></canvas>
+
+        <button id="stopCameraReg" class="stop-btn hidden">Stop Camera</button>
+      </div>
+
+      <div class="row-btns">
+        <button id="captureFace" class="primary-btn disabled">Capture Face (3x)</button>
+        <button id="registerStudent" class="success-btn disabled">Register Student</button>
+      </div>
+
+    </section>
+
+    <!-- PAGE: ATTENDANCE -->
+    <section id="attendance" class="page">
+      <h2>Today's Attendance</h2>
+      <button id="exportCSV" class="export-btn">Export CSV</button>
+
+      <div id="attendanceTable"></div>
+    </section>
+
+    <!-- PAGE: STUDENTS -->
+    <section id="students" class="page">
+      <h2>Registered Students</h2>
+      <div id="studentsList" class="students-grid"></div>
+    </section>
+
+  </div>
+</body>
+</html>
