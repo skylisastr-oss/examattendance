@@ -485,10 +485,25 @@ app.get('/api/attendance/today', async (req, res) => {
     const today = new Date().toLocaleDateString();
     
     const attendanceRecords = await Attendance.find({ date: today })
+      // Use .lean() for faster retrieval if you don't need Mongoose setters/getters
+      .lean() 
       .sort({ checkInTime: -1 });
 
     console.log(`✅ Retrieved ${attendanceRecords.length} attendance records for today`);
 
+    // === START OF CSV LOGIC ===
+    if (req.query.format === 'csv') {
+      const csvData = jsonToCsv(attendanceRecords);
+      
+      res.header('Content-Type', 'text/csv');
+      // This header forces a download prompt and sets the filename
+      res.attachment(`attendance_${today.replace(/\//g, '-')}.csv`); 
+      
+      return res.send(csvData);
+    }
+    // === END OF CSV LOGIC ===
+
+    // Default JSON response
     res.json({ 
       success: true, 
       date: today,
@@ -505,7 +520,6 @@ app.get('/api/attendance/today', async (req, res) => {
     });
   }
 });
-
 // Get attendance by date
 app.get('/api/attendance/date/:date', async (req, res) => {
   try {
@@ -647,4 +661,5 @@ app.listen(PORT, () => {
   console.log('   ========================================\n');
 
 });
+
 
