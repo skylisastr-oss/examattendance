@@ -24,9 +24,7 @@ app.use((req, res, next) => {
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/biometricAttendance';
 
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-})
+mongoose.connect(MONGODB_URI, {})
 .then(() => console.log('✅ MongoDB Connected Successfully'))
 .catch(err => {
   console.error('❌ MongoDB Connection Error:', err.message);
@@ -661,5 +659,6 @@ app.listen(PORT, () => {
   console.log('   ========================================\n');
 
 });
+
 
 
