@@ -1,7 +1,7 @@
 /* ============================================
    CONFIG
 ============================================ */
-const API = "http://localhost:5000/api" || "https://examattendance.onrender.com";
+const API = "https://examattendance.onrender.com/api";
 
 // Test API connection on startup
 async function testAPIConnection() {
@@ -577,4 +577,5 @@ document.getElementById("startVerify").addEventListener("click", async () => {
 ============================================ */
 document.getElementById("exportCSV").addEventListener("click", () => {
   window.open(`${API}/attendance/today?format=csv`, '_blank');
+
 });
