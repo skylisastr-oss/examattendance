@@ -22,10 +22,7 @@ app.use((req, res, next) => {
 });
 
 // MongoDB Connection
-const MONGODB_URI = 'mongodb+srv://studentsBioDb:WNpZ1YxeOAyk9rb1@cluster5.hrywl9m.mongodb.net/biometricAttendance?retryWrites=true&w=majority&appName=Cluster5';
-
-// For Local MongoDB - uncomment this line and comment the one above
-// const MONGODB_URI = 'mongodb://localhost:27017/biometricAttendance';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/biometricAttendance';
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
@@ -627,4 +624,5 @@ app.listen(PORT, () => {
   console.log(`   🔗 API: http://localhost:${PORT}/api`);
   console.log(`   💾 Database: ${MONGODB_URI.includes('localhost') ? 'Local MongoDB' : 'MongoDB Atlas'}`);
   console.log('   ========================================\n');
+
 });
