@@ -110,6 +110,27 @@ attendanceSchema.index({ studentId: 1, date: 1 });
 const Student = mongoose.model('Student', studentSchema);
 const Attendance = mongoose.model('Attendance', attendanceSchema);
 
+// CSV Helper Function (Add this)
+const jsonToCsv = (data) => {
+  if (data.length === 0) return '';
+  
+  // Get headers from the first object keys
+  const headers = Object.keys(data[0]);
+  
+  // Format headers (optional: make them more readable)
+  const headerRow = headers.join(',');
+  
+  // Create rows
+  const dataRows = data.map(row => 
+    headers.map(header => {
+      // Handle commas in data by wrapping in quotes
+      const value = row[header] === null ? '' : row[header].toString();
+      return `"${value.replace(/"/g, '""')}"`;
+    }).join(',')
+  );
+  
+  return [headerRow, ...dataRows].join('\n');
+};
 // ==================== API ROUTES ====================
 
 // API root endpoint
@@ -626,3 +647,4 @@ app.listen(PORT, () => {
   console.log('   ========================================\n');
 
 });
+
